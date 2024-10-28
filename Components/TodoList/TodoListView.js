@@ -2,15 +2,12 @@
 import React from 'react';
 import { View, FlatList,StyleSheet,Text } from 'react-native';
 import ToDoItem from './ToDoItem';
-import TodoListData from './TodoListData';
-
+import  { useTodoList } from './TodoListData';
 
 
 export default function TodoListView() {
 
-    const [todoList] = TodoListData();
-
-    console.log(todoList.length);
+    const {todoList} = useTodoList();
     return (
         <View style={styles.viewStyle}>
 

@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import HomePage from './Pages/HomePage';
 import AddItemButton from './Components/TodoList/AddItemButton';
 import NewTodoItemPage from './Pages/NewTodoItemPage';
+import TodoListProvider from './Components/TodoList/TodoListData';
 
 const Stack = createStackNavigator();
 
@@ -36,12 +37,14 @@ function MainNavigator() {
 
 export default function App() {
   return(
-    <NavigationContainer>
+  <NavigationContainer>
+    <TodoListProvider>
+        <MainNavigator/>
+        <StatusBar style="auto" />
+    </TodoListProvider>
 
-    <MainNavigator/>
-    <StatusBar style="auto" />
-    
-    </NavigationContainer>
+  </NavigationContainer>
+
   )
 }
 
