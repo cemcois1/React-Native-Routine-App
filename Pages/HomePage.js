@@ -1,13 +1,12 @@
 
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import TodoList,{itemDatas} from '../Components/TodoList/ToDoList.js';
-
+import TodoListView from '../Components/TodoList/TodoListView';
 
 export default function HomePage({navigation}) {
   return (
     <View style={styles.container}>
-        <TodoList create/>
+        <TodoListView/>
       </View>
       
     );

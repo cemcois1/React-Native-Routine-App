@@ -1,11 +1,11 @@
 
 
 
-✔️ - uygulama başlığı ve ekle butonu içeren topbar  // Navitagion stack ile tekrar yapıla
+✔️ uygulama başlığı ve ekle butonu içeren topbar  // Navitagion stack ile tekrar yapıla
 
-✔️ -upload to github 
+✔️ upload to github 
 
-Create a list
+✔️ Create a list
 Add items to the list
 Delete items from the list
 Save items in the list

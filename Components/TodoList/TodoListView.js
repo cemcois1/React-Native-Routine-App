@@ -2,22 +2,21 @@
 import React from 'react';
 import { View, FlatList,StyleSheet,Text } from 'react-native';
 import ToDoItem from './ToDoItem';
+import TodoListData from './TodoListData';
 
 
-export const itemDatas = [
-    { id: 1, title: 'Yapılacak 1', isDone: false },
-    { id: 2, title: 'Yapılacak 2', isDone: false },
-    { id: 3, title: 'Yapılacak 3', isDone: false },
-];
 
-export default function TodoList() {
+export default function TodoListView() {
 
+    const [todoList] = TodoListData();
+
+    console.log(todoList.length);
     return (
         <View style={styles.viewStyle}>
 
-            {itemDatas.length > 0 ? (
+            {todoList.length > 0 ? (
                 <FlatList
-                    data={itemDatas}
+                    data={todoList}
                     renderItem={({ item }) => <ToDoItem item={item} />}
                     keyExtractor={item => item.id.toString()}
                 />
@@ -33,6 +32,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#000',
         alignContent: 'center',
+        textAlign: 'center',
     },
     viewStyle: {
         backgroundColor: '#ffff',
