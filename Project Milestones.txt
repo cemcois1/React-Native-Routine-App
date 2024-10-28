@@ -1,0 +1,14 @@
+
+
+
+tick - uygulama başlığı ve ekle butonu içeren topbar  // Navitagion stack ile tekrar yapıla
+
+Liste oluşturma
+
+listeye eleman ekleme
+listeden eleman silme
+listedeki elemanları kaydetme
+listedeki elemanı aşağı yukarı kaydırabilme
+listede var olan elemanın  soluna tiklenebilir bir kutucuk oluşturma 
+bu kutucuğu tikleyince elemanın görünümünün değişmesi
+
