@@ -12,24 +12,21 @@ import NewTodoItemPage from './Pages/NewTodoItemPage';
 
 const Stack = createStackNavigator();
 
-function TopBar() {
+function MainNavigator() {
 
   const navigation = useNavigation();
   return (
     <Stack.Navigator>
       
-      <Stack.Screen name="test" component={HomePage} 
+      <Stack.Screen name="Home" component={HomePage} 
       options={{
         headerStyle: {
         },
-        headerRight: ()=> <AddItemButton onPressed={()=>navigation.navigate('Test1')}/>,
-        
-           // Sağ tarafta buton oluştur
+        headerRight: ()=> <AddItemButton onPressed={()=>navigation.navigate('Create New Item')}/>,// Sağ tarafta buton oluştur
         headerLeft: ()=> <Image source={favicon} style={{width: 40, height: 40, marginLeft: 20}}/>
       }}
       />
-      <Stack.Screen name= "Test1" component={NewTodoItemPage}/>
-      <Stack.Screen name="TopBar" component={TopBar} />
+      <Stack.Screen name= "Create New Item" component={NewTodoItemPage}/>
     </Stack.Navigator>
 
     
@@ -41,7 +38,7 @@ export default function App() {
   return(
     <NavigationContainer>
 
-    <TopBar/>
+    <MainNavigator/>
     <StatusBar style="auto" />
     
     </NavigationContainer>

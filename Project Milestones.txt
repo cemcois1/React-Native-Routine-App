@@ -1,14 +1,15 @@
 
 
 
-tick - uygulama başlığı ve ekle butonu içeren topbar  // Navitagion stack ile tekrar yapıla
+✔️ - uygulama başlığı ve ekle butonu içeren topbar  // Navitagion stack ile tekrar yapıla
 
-Liste oluşturma
+✔️ -upload to github 
 
-listeye eleman ekleme
-listeden eleman silme
-listedeki elemanları kaydetme
-listedeki elemanı aşağı yukarı kaydırabilme
-listede var olan elemanın  soluna tiklenebilir bir kutucuk oluşturma 
-bu kutucuğu tikleyince elemanın görünümünün değişmesi
+Create a list
+Add items to the list
+Delete items from the list
+Save items in the list
+Move items up and down in the list
+Create a checkable box to the left of an item in the list
+Change the appearance of an item when the box is checked
 
