@@ -9,6 +9,8 @@
 ✔️Add items to the list
 ✔️Delete items from the list
     ✔️Edit Items
+
+❌ Problem: FlatList IDs might be the same.
 Save items in the list
 Move items up and down in the list
 Create a checkable box to the left of an item in the list
