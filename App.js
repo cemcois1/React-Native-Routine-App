@@ -17,7 +17,9 @@ function MainNavigator() {
 
   const navigation = useNavigation();
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+    screenOptions={{headerBackTitleVisible:false}}
+    >
       
       <Stack.Screen name="Home" component={HomePage} 
       options={{

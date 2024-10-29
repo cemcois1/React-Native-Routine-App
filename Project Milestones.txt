@@ -6,8 +6,9 @@
 ✔️ upload to github 
 
 ✔️ Create a list
-Add items to the list
-Delete items from the list
+✔️Add items to the list
+✔️Delete items from the list
+    ✔️Edit Items
 Save items in the list
 Move items up and down in the list
 Create a checkable box to the left of an item in the list

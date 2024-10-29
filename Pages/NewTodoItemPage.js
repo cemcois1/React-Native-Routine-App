@@ -1,24 +1,41 @@
 
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useCallback, useEffect } from 'react';
 import { Text, View, StyleSheet, TextInput, Button,KeyboardAvoidingView } from 'react-native';
 import {useTodoList} from '../Components/TodoList/TodoListData';
 export default function NewTodoItemPage() {
 
+    
+    const route= useRoute();
+    const {item}= route.params||{};
 
     const {todoList,setTodoList} = useTodoList();
 
     const navigator=useNavigation();
-    const [taskName, setTaskName] = React.useState('');
+    const [taskName, setTaskName] = React.useState(item?.title||'');
+
+    // Başlığı güncelle
+    useEffect(() => {
+        navigator.setOptions({
+            title: item ? 'Edit Item' : 'Create New Item', // `item` varsa başlığı 'Edit Item' olarak değiştir
+        });
+    }, [navigator, item]);
+
+    const HandleOnPress = useCallback(()=>{
+        if(item){
+            setTodoList(todoList.map((todoItem)=>todoItem.id===item.id?{...todoItem,title:taskName}:todoItem));
+        }
+        else{
+            setTodoList([...todoList,{id:todoList.length+1,title:taskName,isDone:false}]);
+        }
+        navigator.goBack();
+    })
     return (
         <KeyboardAvoidingView 
         behavior='height'
         style={styles.container}>
-            <TextInput style={styles.input} placeholder="Task Name" onChangeText={(data)=>setTaskName(data)} />
-            <Button title="Add Task" onPress={() =>{
-                setTodoList([...todoList,{id:todoList.length+1,title:taskName,isDone:false}]);
-                navigator.goBack();
-            }}/>
+            <TextInput style={styles.input} placeholder="Task Name" defaultValue={taskName} onChangeText={(data)=>setTaskName(data)} />
+            <Button title={!item?"Add Task":"Edit Task"} onPress={HandleOnPress}/>
         </KeyboardAvoidingView>
     );
 

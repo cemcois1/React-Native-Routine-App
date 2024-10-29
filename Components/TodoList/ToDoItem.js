@@ -1,13 +1,40 @@
 //içerisinde checkbox olan verisine göre  görünür olup olmadığını kontrol eden bir component;
-import React from 'react';
-import { View, Text,StyleSheet,Image } from 'react-native';
-export default function ToDoItem({item, onCheck}) {
-    return (
-        <View style={styles.container}>
-            <Image style={{ width : 20, height: 20, marginRight: 10,
-                backgroundColor: item.isDone ? 'green' : 'red' }}/>
-            <Text style={styles.text}>{item.title}</Text>
+import React, { useRef } from 'react';
+import { View, Text,StyleSheet,Image,TouchableOpacity } from 'react-native';
+import {Swipeable} from 'react-native-gesture-handler';
+export default function ToDoItem({item, onDelete,onEdit}) {
+
+    //swipeable Referance
+    const swipeableRef = useRef(null);
+
+    // Silme butonu görünümü
+    const renderRightActions = () => (
+        <View style={{flexDirection:'row'}} >
+            <TouchableOpacity style={styles.editItemsButton} onPress={() => {
+                onEdit(item)
+                setTimeout(() => {
+                    swipeableRef.current.close();
+                }, 500);
+
+            }}>
+                <Text style={styles.deleteButtonText}>Edit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.deleteButton} onPress={() => onDelete(item.id)}>
+                <Text style={styles.deleteButtonText}>Delete</Text>
+            </TouchableOpacity>
         </View>
+    );
+
+    return (
+        <Swipeable ref={swipeableRef} renderRightActions={renderRightActions}
+        >
+            <View style={styles.container}>
+
+                <Image style={{ width : 20, height: 20, marginRight: 10,
+                    backgroundColor: item.isDone ? 'green' : 'red' }}/>
+                <Text style={styles.text}>{item.title}</Text>
+            </View>
+        </Swipeable>
     );
 }
 
@@ -25,6 +52,28 @@ const styles = StyleSheet.create(
             flexDirection: 'row',},
         text: {
             fontSize: 18,
+        },
+        deleteButton: {
+            backgroundColor: 'red',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: 80,
+        },
+        editItemsButton: {
+            backgroundColor: 'blue',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: 80,
+        },
+        deleteButtonText: {
+            color: 'white',
+            fontWeight: 'bold',
+            fontSize: 16,
+        },
+        editButtonText: {
+            color: 'white',
+            fontWeight: 'bold',
+            fontSize: 16,
         },
     }
 );
