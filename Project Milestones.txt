@@ -16,7 +16,7 @@
 
 
 ✔️Scroll checked objects to the end of the list
-Change the appearance of an item when the box is checked
+✔️Change the appearance of an item when the box is checked
 Save items in the list
 
 add Vibration to app
