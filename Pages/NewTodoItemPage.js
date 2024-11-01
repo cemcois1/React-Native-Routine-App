@@ -1,7 +1,7 @@
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect } from 'react';
-import { Text, View, StyleSheet, TextInput, Button,KeyboardAvoidingView } from 'react-native';
+import { Text, View, StyleSheet, TextInput, Button,KeyboardAvoidingView,LayoutAnimation } from 'react-native';
 import {useTodoList} from '../Components/TodoList/TodoListData';
 
 import uuid from 'react-native-uuid';
@@ -11,7 +11,7 @@ export default function NewTodoItemPage() {
     const route= useRoute();
     const {item}= route.params||{};
 
-    const {todoList,setTodoList} = useTodoList();
+    const {todoList,setTodoList,saveList} = useTodoList();
 
     const navigator=useNavigation();
     const [taskName, setTaskName] = React.useState(item?.title||'');
@@ -25,12 +25,18 @@ export default function NewTodoItemPage() {
     }, [navigator, item]);
 
     const HandleOnPress = useCallback(()=>{
+        let list = todoList;
         if(item){
             setTodoList(todoList.map((todoItem)=>todoItem.id===item.id?{...todoItem,title:taskName}:todoItem));
+
         }
         else{
-            setTodoList([{id:uuid.v4(),title:taskName,isDone:false},...todoList]);
+                LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut); // Animasyonlu geçiş
+                setTodoList([{id:uuid.v4(),title:taskName,isDone:false},...list]); // Yeni bir görev ekler
         }
+
+        saveList([{id:uuid.v4(),title:taskName,isDone:false},...list]);
+        console.log("Save List ");
         navigator.goBack();
     })
     return (
