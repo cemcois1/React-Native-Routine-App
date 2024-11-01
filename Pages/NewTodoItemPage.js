@@ -21,6 +21,7 @@ export default function NewTodoItemPage() {
         navigator.setOptions({
             title: item ? 'Edit Item' : 'Create New Item', // `item` varsa başlığı 'Edit Item' olarak değiştir
         });
+        //klavyeyi aç
     }, [navigator, item]);
 
     const HandleOnPress = useCallback(()=>{
@@ -36,7 +37,7 @@ export default function NewTodoItemPage() {
         <KeyboardAvoidingView 
         behavior='height'
         style={styles.container}>
-            <TextInput style={styles.input} placeholder="Task Name" defaultValue={taskName} onChangeText={(data)=>setTaskName(data)} />
+            <TextInput autoFocus={true} style={styles.input} placeholder="Task Name" defaultValue={taskName} onChangeText={(data)=>setTaskName(data)} />
             <Button title={!item?"Add Task":"Edit Task"} onPress={HandleOnPress}/>
         </KeyboardAvoidingView>
     );
