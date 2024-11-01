@@ -10,7 +10,8 @@
 ✔️Delete items from the list
     ✔️Edit Items
 
-❌ Problem: FlatList IDs might be the same.
+✔️ Problem: FlatList IDs might be the same.
+
 Change the appearance of an item when the box is checked
 Save items in the list
 Move items up and down in the list
