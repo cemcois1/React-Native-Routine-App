@@ -17,6 +17,8 @@ export default function TodoListView() {
     const handleEdit = (item) => {
         navigation.navigate('Create New Item', { item }); // item verisini sayfaya gönder
     };
+
+    const ChangeCheckBox = useCallback((id)=>setTodoList(todoList.map((item) => item.id === id ? { ...item, isDone: !item.isDone } : item)), [todoList]);
     
     //todolistin bütün idlerini yazdırır
     //console.log(todoList.map((item) => item.id));
@@ -26,7 +28,7 @@ export default function TodoListView() {
             {todoList.length > 0 ? (
                 <DraggableFlatList
                     data={todoList}
-                    renderItem={({ item,drag }) => <ToDoItem item={item} onDelete={HandleDelete} onEdit={handleEdit} onLongPress={drag}
+                    renderItem={({item,drag}) => <ToDoItem item={item} ChangeCheckBox={ChangeCheckBox} onDelete={HandleDelete} onEdit={handleEdit} onLongPress={drag} 
                     />}
                     keyExtractor={item => item.id.toString()}
                     onDragEnd={({ data }) => setTodoList(data)}
@@ -41,6 +43,7 @@ export default function TodoListView() {
 
 const styles = StyleSheet.create({
     contentText: {
+        marginTop: 25,
         fontSize: 18,
         color: '#000',
         alignContent: 'center',
