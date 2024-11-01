@@ -2,7 +2,7 @@
 import React, { useRef } from 'react';
 import { View, Text,StyleSheet,Image,TouchableOpacity } from 'react-native';
 import {Swipeable} from 'react-native-gesture-handler';
-export default function ToDoItem({item, onDelete,onEdit}) {
+export default function ToDoItem({item, onDelete,onEdit,onLongPress}) {
 
     //swipeable Referance
     const swipeableRef = useRef(null);
@@ -26,15 +26,20 @@ export default function ToDoItem({item, onDelete,onEdit}) {
     );
 
     return (
-        <Swipeable ref={swipeableRef} renderRightActions={renderRightActions}
-        >
+        <Swipeable ref={swipeableRef} renderRightActions={renderRightActions}>
             <View style={styles.container}>
 
                 <Image style={{ width : 20, height: 20, marginRight: 10,
                     backgroundColor: item.isDone ? 'green' : 'red' }}/>
-                <Text style={styles.text}>{item.title}</Text>
+
+                <TouchableOpacity delayLongPress={333} onLongPress={onLongPress} onPress={()=>{swipeableRef.current.openRight();}} style={styles.container}>
+
+                    <Text style={styles.text}>{item.title}</Text>
+                </TouchableOpacity>
+
             </View>
         </Swipeable>
+
     );
 }
 

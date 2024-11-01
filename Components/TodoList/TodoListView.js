@@ -4,6 +4,7 @@ import { View, FlatList,StyleSheet,Text } from 'react-native';
 import ToDoItem from './ToDoItem';
 import  { useTodoList } from './TodoListData';
 import { useNavigation } from '@react-navigation/native';
+import DraggableFlatList from 'react-native-draggable-flatlist'
 export default function TodoListView() {
 
     const {todoList,setTodoList} = useTodoList();
@@ -18,16 +19,17 @@ export default function TodoListView() {
     };
     
     //todolistin bütün idlerini yazdırır
-    console.log(todoList.map((item) => item.id));
+    //console.log(todoList.map((item) => item.id));
     return (
         <View style={styles.viewStyle}>
 
             {todoList.length > 0 ? (
-                <FlatList
+                <DraggableFlatList
                     data={todoList}
-                    renderItem={({ item }) => <ToDoItem item={item} onDelete={HandleDelete} onEdit={handleEdit}
+                    renderItem={({ item,drag }) => <ToDoItem item={item} onDelete={HandleDelete} onEdit={handleEdit} onLongPress={drag}
                     />}
                     keyExtractor={item => item.id.toString()}
+                    onDragEnd={({ data }) => setTodoList(data)}
                 />
 
             ) : (
@@ -47,7 +49,8 @@ const styles = StyleSheet.create({
     viewStyle: {
         backgroundColor: '#ffff',
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'stretch'
+        justifyContent: 'flex-start',
+        alignItems: 'stretch',
+
     },
 });
