@@ -39,7 +39,8 @@ export default function ToDoItem({item, onDelete,onEdit,onLongPress,ChangeCheckB
                     iconStyle={{ borderColor: "green" }}
                     isChecked={item.isDone}
                     onPress={(checked) => {
-                        ChangeCheckBox(item.id);}}
+                        ChangeCheckBox(item.id);
+                    }}
                 />
 
 

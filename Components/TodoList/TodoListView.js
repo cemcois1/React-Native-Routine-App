@@ -1,6 +1,6 @@
 //todo item komponentlerini tutan liste
-import React, { useCallback } from 'react';
-import { View, FlatList,StyleSheet,Text } from 'react-native';
+import React, { useCallback, useRef } from 'react';
+import { View, FlatList,StyleSheet,Text ,LayoutAnimation} from 'react-native';
 import ToDoItem from './ToDoItem';
 import  { useTodoList } from './TodoListData';
 import { useNavigation } from '@react-navigation/native';
@@ -10,16 +10,28 @@ export default function TodoListView() {
     const {todoList,setTodoList} = useTodoList();
     const navigation = useNavigation();
 
+    const DragableFlatListRef = useRef(null);
+
     const HandleDelete = useCallback((id) => {
         setTodoList(prevTodoList => prevTodoList.filter(item => item.id !== id)); // Güncel listeye göre silme işlemi
     }, [setTodoList]);
 
-    const handleEdit = (item) => {
+    const HandleEdit = (item) => {
         navigation.navigate('Create New Item', { item }); // item verisini sayfaya gönder
     };
 
-    const ChangeCheckBox = useCallback((id)=>setTodoList(todoList.map((item) => item.id === id ? { ...item, isDone: !item.isDone } : item)), [todoList]);
-    
+    const ChangeCheckBox = useCallback((id) => {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut); // Animasyonlu geçiş
+        setTodoList((prevTodoList) => {
+            const updatedList = prevTodoList.map((item) =>
+                item.id === id ? { ...item, isDone: !item.isDone } : item
+            );
+            // `isDone` durumuna göre listeyi yeniden sıralar
+            return updatedList.sort((a, b) => a.isDone - b.isDone);
+        });
+    }, [setTodoList]);
+
+
     //todolistin bütün idlerini yazdırır
     //console.log(todoList.map((item) => item.id));
     return (
@@ -27,11 +39,15 @@ export default function TodoListView() {
 
             {todoList.length > 0 ? (
                 <DraggableFlatList
+                    ref={DragableFlatListRef}
                     data={todoList}
-                    renderItem={({item,drag}) => <ToDoItem item={item} ChangeCheckBox={ChangeCheckBox} onDelete={HandleDelete} onEdit={handleEdit} onLongPress={drag} 
+                    renderItem={({item,drag}) => <ToDoItem item={item} ChangeCheckBox={ChangeCheckBox} onDelete={HandleDelete} onEdit={HandleEdit} onLongPress={!item.isDone?drag:drag} 
                     />}
                     keyExtractor={item => item.id.toString()}
-                    onDragEnd={({ data }) => setTodoList(data)}
+                    onDragEnd={({ data }) => {setTodoList(data);
+
+                        
+                    }}
                 />
 
             ) : (

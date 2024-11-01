@@ -13,8 +13,11 @@
 ✔️ Problem: FlatList IDs might be the same.
 ✔️Reorder Items
 ✔️Create a checkable box to the left of an item in the list
-Scroll checked objects to the end of the list
+
+
+✔️Scroll checked objects to the end of the list
 Change the appearance of an item when the box is checked
 Save items in the list
 
+add Vibration to app
 
