@@ -21,3 +21,8 @@
 
 add Vibration to app
 
+tutorial
+
+push notification
+analytics implament
+
