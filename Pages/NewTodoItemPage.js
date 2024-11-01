@@ -29,7 +29,7 @@ export default function NewTodoItemPage() {
             setTodoList(todoList.map((todoItem)=>todoItem.id===item.id?{...todoItem,title:taskName}:todoItem));
         }
         else{
-            setTodoList([...todoList,{id:uuid.v4(),title:taskName,isDone:false}]);
+            setTodoList([{id:uuid.v4(),title:taskName,isDone:false},...todoList]);
         }
         navigator.goBack();
     })
