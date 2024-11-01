@@ -20,9 +20,29 @@
 ✔️Save items in the list
 
 add Vibration to app
+google fontlar eklene
+
+
+// routine check uygulamasına çevir 
+--günlük liste
+--haftalık
+--aylık liste
+--özel liste
+
+settings
 
 tutorial
+
+login
+
 
 push notification
 analytics implament
 
+//abonelik entegrasyonu
+publish app on GP
+publish app on IOS
+
+tutarsa
+//pomodoro 
+//
