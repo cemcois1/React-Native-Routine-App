@@ -16,7 +16,9 @@ export default function TodoListView() {
     const handleEdit = (item) => {
         navigation.navigate('Create New Item', { item }); // item verisini sayfaya gönder
     };
-
+    
+    //todolistin bütün idlerini yazdırır
+    console.log(todoList.map((item) => item.id));
     return (
         <View style={styles.viewStyle}>
 
@@ -27,6 +29,7 @@ export default function TodoListView() {
                     />}
                     keyExtractor={item => item.id.toString()}
                 />
+
             ) : (
                 <Text style={styles.contentText}>Henüz Yapılacaklar yok bir tane girin 1</Text>
             )}

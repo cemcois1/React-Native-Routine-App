@@ -3,6 +3,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect } from 'react';
 import { Text, View, StyleSheet, TextInput, Button,KeyboardAvoidingView } from 'react-native';
 import {useTodoList} from '../Components/TodoList/TodoListData';
+
+import uuid from 'react-native-uuid';
 export default function NewTodoItemPage() {
 
     
@@ -26,7 +28,7 @@ export default function NewTodoItemPage() {
             setTodoList(todoList.map((todoItem)=>todoItem.id===item.id?{...todoItem,title:taskName}:todoItem));
         }
         else{
-            setTodoList([...todoList,{id:todoList.length+1,title:taskName,isDone:false}]);
+            setTodoList([...todoList,{id:uuid.v4,title:taskName,isDone:false}]);
         }
         navigator.goBack();
     })

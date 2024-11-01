@@ -11,8 +11,9 @@
     ✔️Edit Items
 
 ❌ Problem: FlatList IDs might be the same.
+Change the appearance of an item when the box is checked
 Save items in the list
 Move items up and down in the list
 Create a checkable box to the left of an item in the list
-Change the appearance of an item when the box is checked
+
 
