@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import {Button, Image} from 'react-native';
+import {Button, Image,View,ActivityIndicator} from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -11,6 +11,9 @@ import AddItemButton from './Components/TodoList/AddItemButton';
 import NewTodoItemPage from './Pages/NewTodoItemPage';
 import TodoListProvider from './Components/TodoList/TodoListData';
 
+import { loadFonts } from './Components/CodeBase/Fonts/Fonts';
+import { GlobalStyles } from './Components/CodeBase/Fonts/FontStyles';
+import { useEffect, useState } from 'react';
 const Stack = createStackNavigator();
 
 function MainNavigator() {
@@ -21,15 +24,24 @@ function MainNavigator() {
     screenOptions={{headerBackTitleVisible:false}}
     >
       
-      <Stack.Screen name="Home" component={HomePage} 
+      <Stack.Screen  name="Home" component={HomePage} 
       options={{
-        headerStyle: {
+        headerTitleStyle: {...GlobalStyles.headerText,
+          flex: 1,
         },
         headerRight: ()=> <AddItemButton onPressed={()=>navigation.navigate('Create New Item')}/>,// Sağ tarafta buton oluştur
         headerLeft: ()=> <Image source={favicon} style={{width: 40, height: 40, marginLeft: 20}}/>
       }}
       />
-      <Stack.Screen name= "Create New Item" component={NewTodoItemPage}/>
+      <Stack.Screen name= "Create New Item" component={NewTodoItemPage}
+      options={
+        {
+          headerTitleStyle: {...GlobalStyles.headerText,
+            flex: 1,
+          },
+        }
+      }
+      />
     </Stack.Navigator>
 
     
@@ -38,15 +50,31 @@ function MainNavigator() {
 }
 
 export default function App() {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  useEffect(() => {
+    loadFonts().then(() => {
+        setFontsLoaded(true);
+        console.log("Fonts loaded");
+    }).catch((error) => {
+        console.log(error);
+    });
+  } , []);
+
+  if (!fontsLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
   return(
-  <NavigationContainer>
+    <NavigationContainer>
     <TodoListProvider>
         <MainNavigator/>
         <StatusBar style="auto" />
     </TodoListProvider>
-
-  </NavigationContainer>
-
-  )
+    </NavigationContainer>
+  );
 }
 

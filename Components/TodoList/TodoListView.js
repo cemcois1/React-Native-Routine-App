@@ -6,6 +6,7 @@ import  { useTodoList } from './TodoListData';
 import {HeavyHaptic,ErrorHaptic,LightHaptic,MediumHaptic,SuccessHaptic,WarningHaptic} from '../CodeBase/Haptic/HapticHelper';
 import { useNavigation } from '@react-navigation/native';
 import DraggableFlatList,{ScaleDecorator} from 'react-native-draggable-flatlist'
+import { GlobalStyles } from '../CodeBase/Fonts/FontStyles';
 export default function TodoListView() {
 
     const {todoList,setTodoList,loadList,saveList} = useTodoList();
@@ -14,6 +15,7 @@ export default function TodoListView() {
     const DragableFlatListRef = useRef(null);
 
     const HandleDelete = useCallback((id) => {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut); // Animasyonlu geçiş
         setTodoList((prevTodoList) => {
             const updatedList = prevTodoList.filter(item => item.id !== id);
             saveList(updatedList); // Güncellenmiş listeyi kaydetme
@@ -90,7 +92,9 @@ export default function TodoListView() {
                 />
 
             ) : (
-                <Text style={styles.contentText}>Hey! You don't have any tasks yet. Add your first one!</Text>
+                <View style={styles.noTaskContainer}>
+                    <Text style={styles.noTaskText}>Hey! You don't have any tasks yet. Add your first one!</Text>
+                </View>
             )}
         </View>
         
@@ -100,10 +104,22 @@ export default function TodoListView() {
 
 const styles = StyleSheet.create({
     contentText: {
-        marginTop: 25,
+        ...GlobalStyles.primaryText,
         fontSize: 18,
         color: '#000',
         alignContent: 'center',
+        textAlign: 'center',
+    },
+    noTaskContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    noTaskText: {
+        ...GlobalStyles.primaryText,
+        fontSize: 22,
+        padding: 45,
+        color: '#000',
         textAlign: 'center',
     },
     viewStyle: {
@@ -124,6 +140,7 @@ const styles = StyleSheet.create({
         textsise: 45,
     },
     loadingText: {
+        ...GlobalStyles.primaryText,
         fontSize: 20,
         color: '#000',
     },

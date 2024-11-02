@@ -4,6 +4,7 @@ import { View, Text,StyleSheet,Image,TouchableOpacity } from 'react-native';
 import {Swipeable} from 'react-native-gesture-handler';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { LightHaptic, ResetHaptic } from '../CodeBase/Haptic/HapticHelper';
+import { GlobalStyles } from '../CodeBase/Fonts/FontStyles';
 export default function ToDoItem({item, onDelete,onEdit,onLongPress,ChangeCheckBox}) {
 
     //swipeable Referance
@@ -79,6 +80,7 @@ const styles = StyleSheet.create(
 
             flexDirection: 'row',},
         text: {
+            ...GlobalStyles.headerText,
             fontSize: 18,
         },
         deleteButton: {
@@ -94,11 +96,14 @@ const styles = StyleSheet.create(
             width: 80,
         },
         deleteButtonText: {
+            ...GlobalStyles.primaryBoldText,
             color: 'white',
             fontWeight: 'bold',
             fontSize: 16,
         },
         editButtonText: {
+            ...GlobalStyles.primaryBoldText,
+
             color: 'white',
             fontWeight: 'bold',
             fontSize: 16,
