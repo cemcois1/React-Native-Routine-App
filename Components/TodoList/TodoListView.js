@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { View, FlatList,StyleSheet,Text ,LayoutAnimation, ActivityIndicator} from 'react-native';
 import ToDoItem from './ToDoItem';
 import  { useTodoList } from './TodoListData';
-
+import {HeavyHaptic,ErrorHaptic,LightHaptic,MediumHaptic,SuccessHaptic,WarningHaptic} from '../CodeBase/Haptic/HapticHelper';
 import { useNavigation } from '@react-navigation/native';
 import DraggableFlatList,{ScaleDecorator} from 'react-native-draggable-flatlist'
 export default function TodoListView() {
@@ -20,10 +20,12 @@ export default function TodoListView() {
             console.log("Silme işlemi gerçekleşti ", updatedList);
             return updatedList;
         });
+        LightHaptic();
     }, [setTodoList]);
 
     const HandleEdit = (item) => {
         navigation.navigate('Create New Item', { item }); // item verisini sayfaya gönder
+        LightHaptic();
     };
 
     const ChangeCheckBox = useCallback((id) => {
@@ -32,9 +34,9 @@ export default function TodoListView() {
             const updatedList = prevTodoList.map((item) =>
                 item.id === id ? { ...item, isDone: !item.isDone } : item
             );
-            
+
             saveList(updatedList); // Güncellenmiş listeyi kaydetme
-            console.log("Check işlemi gerçekleşti ", updatedList);
+            updatedList.filter((item) => item.id === id)[0].isDone ? SuccessHaptic() : LightHaptic();
             // `isDone` durumuna göre listeyi yeniden sıralar
             return updatedList.sort((a, b) => a.isDone - b.isDone);
         });
@@ -67,9 +69,23 @@ export default function TodoListView() {
                 style={{width:'100%',height:'100%'}}
                     ref={DragableFlatListRef}
                     data={todoList}
-                    renderItem={({item,drag}) => <ScaleDecorator activeScale={1.1}><ToDoItem item={item} ChangeCheckBox={ChangeCheckBox} onDelete={HandleDelete} onEdit={HandleEdit} onLongPress={!item.isDone?drag:null} /></ScaleDecorator>}
+                    renderItem={({item,drag}) => <ScaleDecorator  activeScale={1.1}><ToDoItem item={item} ChangeCheckBox={ChangeCheckBox} onDelete={HandleDelete} onEdit={HandleEdit} 
+                    onLongPress={()=>{
+                       if(!item.isDone){
+                        drag();
+                        LightHaptic();
+                        }
+                        else{
+                            WarningHaptic();
+                        }
+                        }}
+                        />
+                    
+                    
+                    </ScaleDecorator>}
                     keyExtractor={item => item.id.toString()}
-                    onDragEnd={({ data }) => {setTodoList(data);
+                    onDragEnd={({ data }) => {
+                        setTodoList(data);
                     }}
                 />
 

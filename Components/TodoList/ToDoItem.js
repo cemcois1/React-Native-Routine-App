@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import { View, Text,StyleSheet,Image,TouchableOpacity } from 'react-native';
 import {Swipeable} from 'react-native-gesture-handler';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { LightHaptic, ResetHaptic } from '../CodeBase/Haptic/HapticHelper';
 export default function ToDoItem({item, onDelete,onEdit,onLongPress,ChangeCheckBox}) {
 
     //swipeable Referance
@@ -44,7 +45,12 @@ export default function ToDoItem({item, onDelete,onEdit,onLongPress,ChangeCheckB
                 />
 
 
-                <TouchableOpacity delayLongPress={333} onLongPress={onLongPress} onPress={()=>{swipeableRef.current.openRight();}} style={styles.container}>
+                <TouchableOpacity delayLongPress={200} onPressIn={()=>{
+                    ResetHaptic();
+
+                }} onLongPress={onLongPress} onPress={()=>{
+                    swipeableRef.current.openRight();
+                    }} style={styles.container}>
 
                     <Text style={[styles.text,item.isDone?{textDecorationLine: 'line-through',color:'gray'}:{
                         textDecorationLine: 'none',

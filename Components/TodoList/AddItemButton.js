@@ -1,10 +1,13 @@
 import { Text,Button,View,StyleSheet,TouchableOpacity } from "react-native";
+import {LightHaptic} from '../CodeBase/Haptic/HapticHelper';
 
 export default function AddItemButton({onPressed}) {
     return (
         <TouchableOpacity style={styles.button} onPress={() => {
           console.log(onPressed)
-          onPressed()} }>
+          onPressed()
+          LightHaptic();
+          } }>
           <Text style={styles.buttonText}>+</Text>
         </TouchableOpacity>
       );
