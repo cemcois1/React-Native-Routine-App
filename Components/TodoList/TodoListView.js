@@ -5,7 +5,7 @@ import ToDoItem from './ToDoItem';
 import  { useTodoList } from './TodoListData';
 
 import { useNavigation } from '@react-navigation/native';
-import DraggableFlatList from 'react-native-draggable-flatlist'
+import DraggableFlatList,{ScaleDecorator} from 'react-native-draggable-flatlist'
 export default function TodoListView() {
 
     const {todoList,setTodoList,loadList,saveList} = useTodoList();
@@ -64,17 +64,17 @@ export default function TodoListView() {
             
             {todoList.length > 0 ? (
                 <DraggableFlatList
+                style={{width:'100%',height:'100%'}}
                     ref={DragableFlatListRef}
                     data={todoList}
-                    renderItem={({item,drag}) => <ToDoItem item={item} ChangeCheckBox={ChangeCheckBox} onDelete={HandleDelete} onEdit={HandleEdit} onLongPress={!item.isDone?drag:null} 
-                    />}
+                    renderItem={({item,drag}) => <ScaleDecorator activeScale={1.1}><ToDoItem item={item} ChangeCheckBox={ChangeCheckBox} onDelete={HandleDelete} onEdit={HandleEdit} onLongPress={!item.isDone?drag:null} /></ScaleDecorator>}
                     keyExtractor={item => item.id.toString()}
                     onDragEnd={({ data }) => {setTodoList(data);
                     }}
                 />
 
             ) : (
-                <Text style={styles.contentText}>Henüz Yapılacaklar yok bir tane girin 1</Text>
+                <Text style={styles.contentText}>Hey! You don't have any tasks yet. Add your first one!</Text>
             )}
         </View>
         
