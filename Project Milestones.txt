@@ -19,6 +19,7 @@
 ✔️Change the appearance of an item when the box is checked
 ✔️Save items in the list
 
+//confeti particle? vazgeçildi
 add Vibration to app
 google fontlar eklene
 
@@ -44,5 +45,5 @@ publish app on GP
 publish app on IOS
 
 tutarsa
-//pomodoro 
+//pomodoro
 //
