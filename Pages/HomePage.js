@@ -1,13 +1,21 @@
 
 import React from 'react';
-import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import TodoListView from '../Components/TodoList/TodoListView';
+import { Button, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import RoutinesList from '../Components/Routines/RoutinesList';
 
 export default function HomePage({navigation}) {
   return (
+
     <View style={styles.container}>
-        <TodoListView/>
-      </View>
+      <RoutinesList/>
+    </View> 
+
+    //Old Code
+    //<View style={styles.container}>
+    //    <RoutinesList/>
+
+    //    <TodoListView/>
+    //  </View>
       
     );
 }

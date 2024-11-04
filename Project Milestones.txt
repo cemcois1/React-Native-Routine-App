@@ -20,8 +20,14 @@
 ✔️Save items in the list
 
 //confeti particle? vazgeçildi
-add Vibration to app
-google fontlar eklene
+✔️add Vibration to app
+✔️google fontlar eklene
+
+
+✔️ Routine base 
+    * grid sistemi
+    * grid içerisine konu başlıklarının yazılması listedeki objelerin yerleştirilmesi (header,Rate,TaskCount)
+
 
 
 // routine check uygulamasına çevir 
@@ -40,7 +46,7 @@ login
 push notification
 analytics implament
 
-//abonelik entegrasyonu
+//abonelik entegrasyonu ya da paralı uygulama satışı
 publish app on GP
 publish app on IOS
 
