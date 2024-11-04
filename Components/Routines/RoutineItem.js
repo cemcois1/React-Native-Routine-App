@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Animated, TouchableOpacity } from "react-native";
 import { GlobalStyles } from '../CodeBase/Fonts/FontStyles';
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
-export default function RoutineItem({  Header, Rate, progressbarColor  }) {
+export default function RoutineItem({ Header, Rate, progressbarColor, openListKeyPrefix }) {
     const [progress] = useState(new Animated.Value(0));
+    const navigation = useNavigation(); // Hook'u burada kullanın
 
-    useEffect(() => {
-        Animated.timing(progress, {
-            toValue: Rate,
-            duration: 1000, // 1 saniyelik animasyon
-            useNativeDriver: false, // Yatay animasyon için `false` olmalı
-        }).start();
-    }, [Rate]);
+    useFocusEffect(
+        React.useCallback(
+            () => {
+                console.log('RoutineItem Rate :', Rate);
+
+                if (Rate !== -1) {
+                    Animated.timing(progress, {
+                        toValue: Rate,
+                        duration: 1000, // 1 saniyelik animasyon
+                        useNativeDriver: false, // Yatay animasyon için `false` olmalı
+                    }).start();
+                }
+            }, [Rate,navigation])
+    );
 
     const progressWidth = progress.interpolate({
         inputRange: [0, 100],
@@ -19,19 +28,24 @@ export default function RoutineItem({  Header, Rate, progressbarColor  }) {
     });
 
     return (
-        <TouchableOpacity >
-        <View style={styles.container}>
-            <Text style={GlobalStyles.headerText}>{Header}</Text>
-            <View style={styles.progressContainer}>
-                <View style={styles.progressBar}>
-                    <Animated.View style={[styles.progressFill, { width: progressWidth, backgroundColor: progressbarColor }]} />
-                </View>
-                <Text style={styles.progressText}>{Math.round(Rate)}%</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Todos', { openListKeyPrefix })}>
+            <View style={styles.container}>
+                <Text style={GlobalStyles.headerText}>{Header}</Text>
+                {Rate === -1 ? (
+                    <Text style={styles.noProgressText}>Create New one!</Text>
+                ) : (
+                    <View style={styles.progressContainer}>
+                        <View style={styles.progressBar}>
+                            <Animated.View style={[styles.progressFill, { width: progressWidth, backgroundColor: progressbarColor }]} />
+                        </View>
+                        <Text style={styles.progressText}>{Math.round(Rate)}%</Text>
+                    </View>
+                )}
             </View>
-        </View>
         </TouchableOpacity>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         paddingVertical: 20,
@@ -75,5 +89,11 @@ const styles = StyleSheet.create({
         ...GlobalStyles.primaryBoldText,
         color: '#333',
     },
+    noProgressText: {
+        ...GlobalStyles.secondaryBoldText,
+        fontSize: 16,
+        color: '#555',
+        textAlign: 'center',
+        marginTop: 25,
+    },
 });
-

@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import {Button, Image,View,ActivityIndicator} from 'react-native';
+import { Button, Image, View, ActivityIndicator } from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -14,6 +14,7 @@ import TodoListProvider from './Components/TodoList/TodoListData';
 import { loadFonts } from './Components/CodeBase/Fonts/Fonts';
 import { GlobalStyles } from './Components/CodeBase/Fonts/FontStyles';
 import { useEffect, useState } from 'react';
+import TodoListPage from './Pages/TodoListPage';
 const Stack = createStackNavigator();
 
 function MainNavigator() {
@@ -21,30 +22,42 @@ function MainNavigator() {
   const navigation = useNavigation();
   return (
     <Stack.Navigator
-    screenOptions={{headerBackTitleVisible:false}}
+      screenOptions={{ headerBackTitleVisible: false }}
     >
-      
-      <Stack.Screen  name="Home" component={HomePage} 
-      options={{
-        headerTitleStyle: {...GlobalStyles.headerText,
-          flex: 1,
-        },
-        headerRight: ()=> <AddItemButton onPressed={()=>navigation.navigate('Create New Item')}/>,// Sağ tarafta buton oluştur
-        headerLeft: ()=> <Image source={favicon} style={{width: 40, height: 40, marginLeft: 20}}/>
-      }}
-      />
-      <Stack.Screen name= "Create New Item" component={NewTodoItemPage}
-      options={
-        {
-          headerTitleStyle: {...GlobalStyles.headerText,
+
+      <Stack.Screen name="Home" component={HomePage}
+        options={{
+          headerTitleStyle: {
+            ...GlobalStyles.headerText,
             flex: 1,
           },
+          
+          headerLeft: () => <Image source={favicon} style={{ width: 40, height: 40, marginLeft: 20 }} />
+        }}
+      />
+      <Stack.Screen name="Create New Item" component={NewTodoItemPage}
+        options={
+          {
+            headerTitleStyle: {
+              ...GlobalStyles.headerText,
+              flex: 1,
+            },
+          }
         }
-      }
+      />
+      <Stack.Screen name="Todos" component={TodoListPage}
+        options={
+          {
+            headerTitleStyle: {
+              ...GlobalStyles.headerText,
+              flex: 1,
+            },
+            headerRight: () => <AddItemButton onPressed={() => navigation.navigate('Create New Item')} />,// Sağ tarafta buton oluştur
+          }
+          
+        }
       />
     </Stack.Navigator>
-
-    
     
   );
 }
@@ -54,12 +67,12 @@ export default function App() {
 
   useEffect(() => {
     loadFonts().then(() => {
-        setFontsLoaded(true);
-        console.log("Fonts loaded");
+      setFontsLoaded(true);
+      console.log("Fonts loaded");
     }).catch((error) => {
-        console.log(error);
+      console.log(error);
     });
-  } , []);
+  }, []);
 
   if (!fontsLoaded) {
     return (
@@ -68,12 +81,12 @@ export default function App() {
       </View>
     );
   }
-  return(
+  return (
     <NavigationContainer>
-    <TodoListProvider>
-        <MainNavigator/>
+      <TodoListProvider>
+        <MainNavigator />
         <StatusBar style="auto" />
-    </TodoListProvider>
+      </TodoListProvider>
     </NavigationContainer>
   );
 }

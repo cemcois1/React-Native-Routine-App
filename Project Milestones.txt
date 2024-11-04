@@ -30,11 +30,11 @@
 
 
 
-// routine check uygulamasına çevir 
---günlük liste
---haftalık
---aylık liste
---özel liste
+✔️// routine check uygulamasına çevir 
+✔️--günlük liste
+✔️--haftalık
+✔️--aylık liste
+✔️--özel liste
 
 settings
 

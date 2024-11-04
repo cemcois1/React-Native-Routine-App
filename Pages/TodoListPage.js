@@ -1,32 +1,43 @@
 //todo item komponentlerini tutan liste
 import React, { useCallback, useEffect, useRef } from 'react';
 import { View, FlatList,StyleSheet,Text ,LayoutAnimation, ActivityIndicator} from 'react-native';
-import ToDoItem from './ToDoItem';
-import  { useTodoList } from './TodoListData';
-import {HeavyHaptic,ErrorHaptic,LightHaptic,MediumHaptic,SuccessHaptic,WarningHaptic} from '../CodeBase/Haptic/HapticHelper';
-import { useNavigation } from '@react-navigation/native';
+import ToDoItem from '../Components/TodoList/ToDoItem';
+import  { useTodoList } from '../Components/TodoList/TodoListData';
+import {LightHaptic,SuccessHaptic,WarningHaptic} from '../Components/CodeBase/Haptic/HapticHelper';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import DraggableFlatList,{ScaleDecorator} from 'react-native-draggable-flatlist'
-import { GlobalStyles } from '../CodeBase/Fonts/FontStyles';
-export default function TodoListView() {
-
+import { GlobalStyles } from '../Components/CodeBase/Fonts/FontStyles';
+import AddItemButton from '../Components/TodoList/AddItemButton';
+export default function TodoListPage() {
+    const route  = useRoute();
+    const {openListKeyPrefix}= route.params||{};
     const {todoList,setTodoList,loadList,saveList} = useTodoList();
     const navigation = useNavigation();
     const [isLoaded, setIsLoaded] = React.useState(false);
     const DragableFlatListRef = useRef(null);
 
+
+    useEffect(() => {
+        // headerRight'ı her sayfa yüklendiğinde yeniden tanımlayın
+        navigation.setOptions({
+            headerRight: () => (
+                <AddItemButton onPressed={() => navigation.navigate('Create New Item', { openListKeyPrefix })} />
+            ),
+        });
+    }, [navigation, openListKeyPrefix]);
+
     const HandleDelete = useCallback((id) => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut); // Animasyonlu geçiş
         setTodoList((prevTodoList) => {
             const updatedList = prevTodoList.filter(item => item.id !== id);
-            saveList(updatedList); // Güncellenmiş listeyi kaydetme
-            console.log("Silme işlemi gerçekleşti ", updatedList);
+            saveList(updatedList,openListKeyPrefix); // Güncellenmiş listeyi kaydetme
             return updatedList;
         });
         LightHaptic();
     }, [setTodoList]);
 
     const HandleEdit = (item) => {
-        navigation.navigate('Create New Item', { item }); // item verisini sayfaya gönder
+        navigation.navigate('Create New Item', { item,openListKeyPrefix }); // item verisini sayfaya gönder
         LightHaptic();
     };
 
@@ -37,16 +48,16 @@ export default function TodoListView() {
                 item.id === id ? { ...item, isDone: !item.isDone } : item
             );
 
-            saveList(updatedList); // Güncellenmiş listeyi kaydetme
+            saveList(updatedList,openListKeyPrefix); // Güncellenmiş listeyi kaydetme
             updatedList.filter((item) => item.id === id)[0].isDone ? SuccessHaptic() : LightHaptic();
             // `isDone` durumuna göre listeyi yeniden sıralar
-            return updatedList.sort((a, b) => a.isDone - b.isDone);
+            return updatedList;
         });
     }, [setTodoList]);
 
     useEffect(() => {
 
-        loadList().then(
+        loadList(openListKeyPrefix).then(
             ()=>{
                 console.log("Liste yüklendi")
                 setIsLoaded(true);
@@ -57,8 +68,16 @@ export default function TodoListView() {
         
     },[]);
 
-    //todolistin bütün idlerini yazdırır
-    //console.log(todoList.map((item) => item.id));
+    useEffect(() => {
+        //openListKeyPrefix varsa başlığı güncelle
+        if(openListKeyPrefix){
+            navigation.setOptions({
+                title: openListKeyPrefix+" Todos",
+            });
+        }
+    }, [openListKeyPrefix]);
+
+    
     return (
         !isLoaded ? <View style={styles.LoadingViewStyle}>
             <ActivityIndicator size="large" color="#0000ff" />

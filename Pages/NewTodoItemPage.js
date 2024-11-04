@@ -1,4 +1,3 @@
-
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect } from 'react';
 import { Text, View, StyleSheet, TextInput, Button,KeyboardAvoidingView,LayoutAnimation } from 'react-native';
@@ -11,8 +10,7 @@ export default function NewTodoItemPage() {
 
     
     const route= useRoute();
-    const {item}= route.params||{};
-
+    const {item,openListKeyPrefix}= route.params||{};
     const {todoList,setTodoList,saveList} = useTodoList();
 
     const navigator=useNavigation();
@@ -24,7 +22,6 @@ export default function NewTodoItemPage() {
             title: item ? 'Edit Item' : 'Create New Item', // `item` varsa başlığı 'Edit Item' olarak değiştir
         }
     );
-        //klavyeyi aç
     }, [navigator, item]);
 
     const HandleOnPress = useCallback(()=>{
@@ -38,7 +35,7 @@ export default function NewTodoItemPage() {
                 setTodoList([{id:uuid.v4(),title:taskName,isDone:false},...list]); // Yeni bir görev ekler
         }
 
-        saveList([{id:uuid.v4(),title:taskName,isDone:false},...list]);
+        saveList([{id:uuid.v4(),title:taskName,isDone:false},...list],openListKeyPrefix);
         console.log("Save List ");
         navigator.goBack();
     })
