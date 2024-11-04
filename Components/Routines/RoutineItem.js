@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Animated, TouchableOpacity } from "react-native";
 import { GlobalStyles } from '../CodeBase/Fonts/FontStyles';
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { LightHaptic } from "../CodeBase/Haptic/HapticHelper";
+
 
 export default function RoutineItem({ Header, Rate, progressbarColor, openListKeyPrefix }) {
     const [progress] = useState(new Animated.Value(0));
@@ -28,7 +30,9 @@ export default function RoutineItem({ Header, Rate, progressbarColor, openListKe
     });
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('Todos', { openListKeyPrefix })}>
+        <TouchableOpacity onPress={() => {
+            LightHaptic();
+            navigation.navigate('Todos', { openListKeyPrefix })}}>
             <View style={styles.container}>
                 <Text style={GlobalStyles.headerText}>{Header}</Text>
                 {Rate === -1 ? (
