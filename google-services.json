@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "201642044607",
+    "project_id": "routines-app-af6e4",
+    "storage_bucket": "routines-app-af6e4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201642044607:android:4324b501a21d05c6626a0a",
+        "android_client_info": {
+          "package_name": "com.Mandalina.Routine"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgpdrYi8WrvFAikM1r6UvL2SmgJ7GVyxk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
