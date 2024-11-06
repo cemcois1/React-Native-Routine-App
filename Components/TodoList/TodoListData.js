@@ -7,10 +7,6 @@ const TodoListContext = createContext();
 // `TodoListProvider` bileşeni
 export default function TodoListProvider({ children }) {
     const getInitialData = () => [
-        { id: uuid.v4(), title: 'Task 1', isDone: false },
-        { id: uuid.v4(), title: 'Task 2', isDone: false },
-        { id: uuid.v4(), title: 'Task 3', isDone: false },
-        { id: uuid.v4(), title: 'Task 4', isDone: true },
     ];
 
     const [todoList, setTodoList] = useState([]);
@@ -27,28 +23,30 @@ export default function TodoListProvider({ children }) {
     };
 
     // AsyncStorage'dan listeyi yükler
-// AsyncStorage'dan listeyi yükler
-const loadList = async (openListKeyPrefix) => {
-    try {
-        const jsonValue = await AsyncStorage.getItem(`${openListKeyPrefix}todoList`);
-        console.log(openListKeyPrefix + " Liste ", JSON.parse(jsonValue).length>0?"yüklendi":'Yüklenemedi'
-    );
-        if (jsonValue != null) {
-            const parsedList = JSON.parse(jsonValue);
-            setTodoList(parsedList);
-            return parsedList; // Veriyi döndür
-        } else {
+    // AsyncStorage'dan listeyi yükler
+    const loadList = async (openListKeyPrefix) => {
+        try {
+            const jsonValue = await AsyncStorage.getItem(`${openListKeyPrefix}todoList`);
+            console.log(jsonValue + "Liste yükleniyor");
+
+            console.log(openListKeyPrefix + " Liste ",jsonValue===null ? "yok" :
+                 JSON.parse(jsonValue).length > 0 ? "yüklendi" : 'Yüklenemedi');
+            if (jsonValue != null) {
+                const parsedList = JSON.parse(jsonValue);
+                setTodoList(parsedList);
+                return parsedList; // Veriyi döndür
+            } else {
+                const initialData = getInitialData();
+                setTodoList(initialData);
+                return initialData; // Başlangıç verilerini döndür
+            }
+        } catch (e) {
+            console.error('Listeyi yükleme hatası:', e);
             const initialData = getInitialData();
             setTodoList(initialData);
-            return initialData; // Başlangıç verilerini döndür
+            return initialData; // Hata durumunda başlangıç verilerini döndür
         }
-    } catch (e) {
-        console.error('Listeyi yükleme hatası:', e);
-        const initialData = getInitialData();
-        setTodoList(initialData);
-        return initialData; // Hata durumunda başlangıç verilerini döndür
-    }
-};
+    };
 
 
     return (
