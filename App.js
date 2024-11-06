@@ -17,7 +17,11 @@ import { useEffect, useState } from 'react';
 import TodoListPage from './Pages/TodoListPage';
 const Stack = createStackNavigator();
 
+const InitializeAnalytics = async () => {
+  console.log("Analytics initialized");
+}
 function MainNavigator() {
+
 
   const navigation = useNavigation();
   return (
@@ -63,9 +67,13 @@ function MainNavigator() {
 }
 
 export default function App() {
+
+    //initialize analytics
+  
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
+    InitializeAnalytics();
     loadFonts().then(() => {
       setFontsLoaded(true);
       console.log("Fonts loaded");
