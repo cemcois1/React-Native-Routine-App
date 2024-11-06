@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "myFirstApp",
-    "slug": "myFirstApp",
+    "name": "Routines",
+    "slug": "Routines",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -12,13 +12,15 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "package": "com.Mandalina.Routines"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.Mandalina.Routine"
     },
     "web": {
       "favicon": "./assets/favicon.png"
