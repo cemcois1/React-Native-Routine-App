@@ -45,6 +45,7 @@ login
 
 
 push notification
+rate us
 
 
 //abonelik entegrasyonu ya da paralı uygulama satışı
