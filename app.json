@@ -12,18 +12,32 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "package": "com.Mandalina.Routines"
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
+      "googleServicesFile": "./google-services.json",
       "package": "com.Mandalina.Routine"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "@react-native-firebase/app",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "93f6d154-1924-4487-b48b-664c71e9402c"
+      }
     }
   }
 }
