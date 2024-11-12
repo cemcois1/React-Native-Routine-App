@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, Image, View, ActivityIndicator, AppRegistry } from 'react-native';
+import { Button, Image, View, ActivityIndicator } from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -14,12 +14,12 @@ import TodoListProvider from './Components/TodoList/TodoListData';
 import { loadFonts } from './Components/CodeBase/Fonts/Fonts';
 import { GlobalStyles } from './Components/CodeBase/Fonts/FontStyles';
 import { useEffect, useState } from 'react';
-import { app,analytics } from './firebaseConfig';
 import TodoListPage from './Pages/TodoListPage';
-
-
 const Stack = createStackNavigator();
 
+const InitializeAnalytics = async () => {
+  console.log("Analytics initialized");
+}
 function MainNavigator() {
 
 
@@ -35,7 +35,7 @@ function MainNavigator() {
             ...GlobalStyles.headerText,
             flex: 1,
           },
-
+          
           headerLeft: () => <Image source={favicon} style={{ width: 40, height: 40, marginLeft: 20 }} />
         }}
       />
@@ -58,21 +58,22 @@ function MainNavigator() {
             },
             headerRight: () => <AddItemButton onPressed={() => navigation.navigate('Create New Item')} />,// Sağ tarafta buton oluştur
           }
-
+          
         }
       />
     </Stack.Navigator>
-
+    
   );
 }
 
 export default function App() {
 
-  //initialize analytics
-
+    //initialize analytics
+  
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
+    InitializeAnalytics();
     loadFonts().then(() => {
       setFontsLoaded(true);
       console.log("Fonts loaded");
